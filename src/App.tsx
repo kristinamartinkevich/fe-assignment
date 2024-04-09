@@ -1,15 +1,13 @@
-import './App.css'
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { DataTable } from './components/DataTable';
 
-export const TITLE = 'Customer Analytics'
 
 function App() {
 
     return (
         <>
-            <h1>{TITLE}</h1>
-            <div className="card">
-                See README.md within the repository for assignment details.
-            </div>
+            <DataTable />
         </>
     )
 }
