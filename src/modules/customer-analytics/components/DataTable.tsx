@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { Placeholder, Spinner, Table } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Analytics, Customer } from '../../../model';
+import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Analytics, Customer } from '../../../model/model';
 import { create } from 'zustand'
+import Placeholders from '../../common/components/Placeholders';
 
 function calculatePercentage(numerator: number, denominator: number): string {
     return ((numerator / denominator) * 100).toFixed() + '%';
@@ -62,39 +62,39 @@ function DataTable() {
     }, []);
 
     return (
-        <>
-            <Table striped>
-                <thead>
-                    <tr>
-                        {columns.map((header, index) => (
-                            <th key={index}>{header}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {customers && Object.keys(analytics).length > 0 ? (
-                        customers.map((customer) => (
-                            <tr key={customer.id}>
-                                <td>#{customer.id}</td>
-                                <td>{customer.firstName} {customer.lastName} </td>
-                                <td>{analytics[customer.id].views}</td>
-                                <td>{analytics[customer.id].clicks}</td>
-                                <td>{analytics[customer.id].checkouts}</td>
-                                <td>{analytics[customer.id].payments}</td>
-                                <td>{calculatePercentage(analytics[customer.id].views, analytics[customer.id].clicks)}</td>
-                                <td>{calculatePercentage(analytics[customer.id].payments, analytics[customer.id].views)}</td>
+        <Container>
+            <Row>
+                <Col>
+                    <Table striped responsive>
+                        <thead>
+                            <tr>
+                                {columns.map((header, index) => (
+                                    <th key={index}>{header}</th>
+                                ))}
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan={12} className='align-items-xe'>
-                                <Spinner /> Loading...
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </Table>
-        </>
+                        </thead>
+                        <tbody>
+                            {customers && Object.keys(analytics).length > 0 ? (
+                                customers.map((customer) => (
+                                    <tr key={customer.id}>
+                                        <td>#{customer.id}</td>
+                                        <td>{customer.firstName} {customer.lastName} </td>
+                                        <td>{analytics[customer.id].views}</td>
+                                        <td>{analytics[customer.id].clicks}</td>
+                                        <td>{analytics[customer.id].checkouts}</td>
+                                        <td>{analytics[customer.id].payments}</td>
+                                        <td>{calculatePercentage(analytics[customer.id].views, analytics[customer.id].clicks)}</td>
+                                        <td>{calculatePercentage(analytics[customer.id].payments, analytics[customer.id].views)}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <Placeholders />
+                            )}
+                        </tbody>
+                    </Table>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

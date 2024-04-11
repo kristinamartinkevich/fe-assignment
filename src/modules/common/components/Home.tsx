@@ -1,15 +1,13 @@
 import { Col, Container, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
-function NoMatch() {
+function Home() {
 
     return (
         <>
             <Container>
                 <Row>
                     <Col>
-                        <h1>404 Not Found</h1>
-                        <Link to="/">Go to the home page</Link>
+                        <h1>Home Page</h1>
                     </Col>
                 </Row>
             </Container>
@@ -17,4 +15,4 @@ function NoMatch() {
     )
 }
 
-export default NoMatch
+export default Home
