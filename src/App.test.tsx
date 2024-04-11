@@ -1,10 +1,23 @@
-import {render, screen} from "@testing-library/react";
-import App, {TITLE} from "./App.tsx";
+import { render, screen } from "@testing-library/react";
+import App from "./App.tsx";
+import NavigationBar from "./modules/common/components/NavigationBar.tsx";
 
-describe('App', () => {
-    it('should render the Title', () => {
-        render(<App/>)
 
-        expect(screen.getByText(TITLE)).toBeInTheDocument()
-    });
+test('renders without crashing', () => {
+    render(<App />);
+});
+
+test('renders navigation bar with links', () => {
+    render(<NavigationBar />);
+
+    const navBar = screen.getByRole('navigation');
+    expect(navBar).toBeInTheDocument();
+
+    const homeLink = screen.getByText('Home');
+    expect(homeLink).toBeInTheDocument();
+    expect(homeLink).toHaveAttribute('href', '/');
+
+    const customerAnalyticsLink = screen.getByText('Customer Analytics');
+    expect(customerAnalyticsLink).toBeInTheDocument();
+    expect(customerAnalyticsLink).toHaveAttribute('href', '/customer-analytics');
 });

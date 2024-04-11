@@ -7,7 +7,7 @@ function NavigationBar() {
             <Container className="d-flex justify-content-end">
                 <Nav className="ml-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/data-table">Customer Analytics</Nav.Link>
+                    <Nav.Link href="/customer-analytics">Customer Analytics</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

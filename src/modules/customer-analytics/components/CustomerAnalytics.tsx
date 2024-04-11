@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { Analytics, Customer } from '../../../model/model';
 import { create } from 'zustand'
-import Placeholders from '../../common/components/Placeholders';
+import Placeholders from './Placeholders';
+import { calculatePercentage } from '../utils/utils';
 
-function calculatePercentage(numerator: number, denominator: number): string {
-    return ((numerator / denominator) * 100).toFixed() + '%';
-}
-
-const columns: string[] = [
+export const columns: string[] = [
     'ID',
     'CUSTOMER FULL NAME',
     'STORE VIEWS',
@@ -38,7 +35,7 @@ const useStore = create<Store>((set) => ({
     setAnalytics: (analytics) => set({ analytics }),
 }));
 
-function DataTable() {
+function CustomerAnalytics() {
     const { customers, analytics, setCustomers, setAnalytics } = useStore();
 
     useEffect(() => {
@@ -61,6 +58,26 @@ function DataTable() {
         }, 3000);
     }, []);
 
+    const renderCustomerAnalyticsRows = () => {
+        return customers.map((customer) => {
+            const { id, firstName, lastName } = customer;
+            const { views, clicks, checkouts, payments } = analytics[id];
+
+            return (
+                <tr key={id}>
+                    <td>#{id}</td>
+                    <td>{firstName} {lastName}</td>
+                    <td>{views}</td>
+                    <td>{clicks}</td>
+                    <td>{checkouts}</td>
+                    <td>{payments}</td>
+                    <td>{calculatePercentage(views, clicks)}</td>
+                    <td>{calculatePercentage(payments, views)}</td>
+                </tr>
+            );
+        });
+    };
+
     return (
         <Container>
             <Row>
@@ -75,18 +92,7 @@ function DataTable() {
                         </thead>
                         <tbody>
                             {customers && Object.keys(analytics).length > 0 ? (
-                                customers.map((customer) => (
-                                    <tr key={customer.id}>
-                                        <td>#{customer.id}</td>
-                                        <td>{customer.firstName} {customer.lastName} </td>
-                                        <td>{analytics[customer.id].views}</td>
-                                        <td>{analytics[customer.id].clicks}</td>
-                                        <td>{analytics[customer.id].checkouts}</td>
-                                        <td>{analytics[customer.id].payments}</td>
-                                        <td>{calculatePercentage(analytics[customer.id].views, analytics[customer.id].clicks)}</td>
-                                        <td>{calculatePercentage(analytics[customer.id].payments, analytics[customer.id].views)}</td>
-                                    </tr>
-                                ))
+                                renderCustomerAnalyticsRows()
                             ) : (
                                 <Placeholders />
                             )}
@@ -98,4 +104,4 @@ function DataTable() {
     )
 }
 
-export default DataTable
+export default CustomerAnalytics

@@ -8,7 +8,7 @@ function NoMatch() {
             <Container>
                 <Row>
                     <Col>
-                        <h1>404 Not Found</h1>
+                        <h1>404</h1>
                         <Link to="/">Go to the home page</Link>
                     </Col>
                 </Row>
